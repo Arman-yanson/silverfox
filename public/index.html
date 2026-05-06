@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Legal Copy Reviewer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f6f8;
+      --surface: #ffffff;
+      --border: #e2e5ea;
+      --text: #1a1d23;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --high: #dc2626;
+      --high-bg: #fef2f2;
+      --high-border: #fecaca;
+      --medium: #d97706;
+      --medium-bg: #fffbeb;
+      --medium-border: #fde68a;
+      --low: #059669;
+      --low-bg: #f0fdf4;
+      --low-border: #bbf7d0;
+      --acl: #7c3aed;
+      --acl-bg: #f5f3ff;
+      --fin: #0891b2;
+      --fin-bg: #ecfeff;
+      --custom: #be185d;
+      --custom-bg: #fdf2f8;
+      --radius: 10px;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+      --shadow-lg: 0 4px 16px rgba(0,0,0,.10);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: var(--shadow);
+    }
+    header .logo { font-size: 24px; }
+    header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+    header p { font-size: 13px; color: var(--muted); }
+
+    main { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 24px;
+    }
+    .card h2 { font-size: 16px; font-weight: 600; margin-bottom: 20px; color: var(--text); }
+
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .15s;
+      background: var(--bg);
+    }
+    .upload-area:hover, .upload-area.drag-over {
+      border-color: var(--primary);
+      background: rgba(37,99,235,.04);
+    }
+    .upload-area input { display: none; }
+    .upload-area .icon { font-size: 32px; margin-bottom: 8px; }
+    .upload-area p { font-size: 14px; color: var(--muted); }
+    .upload-area p strong { color: var(--primary); }
+    .upload-area .filename {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .btn-primary:hover:not(:disabled) { background: var(--primary-hover); }
+    .btn-primary:disabled { opacity: .55; cursor: not-allowed; }
+    .btn-secondary {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover:not(:disabled) { background: var(--border); }
+    .btn-secondary:disabled { opacity: .55; cursor: not-allowed; }
+
+    .action-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+
+    .loading {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 16px;
+    }
+    .loading.visible { display: flex; }
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error-banner {
+      display: none;
+      background: var(--high-bg);
+      border: 1px solid var(--high-border);
+      color: var(--high);
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 16px;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .error-banner.visible { display: flex; }
+
+    #results { display: none; }
+    #results.visible { display: block; }
+
+    .summary-card {
+      background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
+      border: 1px solid #c7d2fe;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+    .summary-card .label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .summary-card p { font-size: 15px; line-height: 1.7; color: var(--text); }
+
+    .stats-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .stat-pill.high { background: var(--high-bg); color: var(--high); border: 1px solid var(--high-border); }
+    .stat-pill.medium { background: var(--medium-bg); color: var(--medium); border: 1px solid var(--medium-border); }
+    .stat-pill.low { background: var(--low-bg); color: var(--low); border: 1px solid var(--low-border); }
+    .stat-pill.total { background: #f1f5f9; color: var(--text); border: 1px solid var(--border); }
+
+    .issue-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 14px;
+      overflow: hidden;
+      transition: box-shadow .15s;
+    }
+    .issue-card:hover { box-shadow: var(--shadow-lg); }
+    .issue-card.high { border-left: 4px solid var(--high); }
+    .issue-card.medium { border-left: 4px solid var(--medium); }
+    .issue-card.low { border-left: 4px solid var(--low); }
+
+    .issue-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      background: var(--surface);
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      white-space: nowrap;
+    }
+    .badge.high { background: var(--high-bg); color: var(--high); }
+    .badge.medium { background: var(--medium-bg); color: var(--medium); }
+    .badge.low { background: var(--low-bg); color: var(--low); }
+    .badge.acl { background: var(--acl-bg); color: var(--acl); }
+    .badge.financial { background: var(--fin-bg); color: var(--fin); }
+    .badge.custom { background: var(--custom-bg); color: var(--custom); }
+
+    .issue-rule {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .issue-body { padding: 0 18px 18px; background: var(--surface); }
+
+    .original-text {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--text);
+      margin-bottom: 14px;
+      font-style: italic;
+      line-height: 1.5;
+    }
+    .original-text::before {
+      content: '"';
+      font-size: 20px;
+      color: var(--muted);
+      font-style: normal;
+      line-height: 0;
+      vertical-align: -4px;
+      margin-right: 2px;
+    }
+
+    .issue-section { margin-bottom: 12px; }
+    .issue-section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .issue-section p { font-size: 14px; line-height: 1.6; }
+
+    .fix-box {
+      background: var(--low-bg);
+      border: 1px solid var(--low-border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #065f46;
+    }
+
+    .no-issues {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--muted);
+    }
+    .no-issues .icon { font-size: 48px; margin-bottom: 12px; }
+    .no-issues h3 { font-size: 18px; color: var(--text); margin-bottom: 8px; }
+    .no-issues p { font-size: 14px; }
+
+    .results-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+
+    .section-divider {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 16px; flex-wrap: wrap; }
+      main { padding: 20px 12px; }
+      .card { padding: 20px; }
+      .issue-rule { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">⚖️</div>
+  <div>
+    <h1>Legal Copy Reviewer</h1>
+    <p>Australian Consumer Law &amp; Financial Services Compliance</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- Input card -->
+  <div class="card" id="input-card">
+    <h2>Review copy for compliance issues</h2>
+
+    <div class="field">
+      <label>Upload Word Document (.docx)</label>
+      <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()"
+        ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+        <input type="file" id="file-input" accept=".docx,.doc" onchange="handleFileSelect(event)" />
+        <div class="icon">📂</div>
+        <p><strong>Click to browse</strong> or drag and drop</p>
+        <p>.docx files supported</p>
+        <div class="filename" id="filename"></div>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button class="btn btn-primary" id="analyse-btn" onclick="analyse()">
+        <span>Analyse for Issues</span>
+        <span>→</span>
+      </button>
+    </div>
+
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <span id="loading-text">Analysing copy…</span>
+    </div>
+
+    <div class="error-banner" id="error-banner">
+      <span>⚠️</span>
+      <span id="error-text"></span>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <div id="results">
+    <div class="summary-card">
+      <div class="label">Compliance Summary</div>
+      <p id="summary-text"></p>
+    </div>
+
+    <div class="stats-row" id="stats-row"></div>
+
+    <div class="section-divider" id="issues-label">Issues found</div>
+
+    <div id="issues-list"></div>
+
+    <div class="card" style="margin-top:24px;">
+      <div class="results-actions" id="results-actions">
+        <button class="btn btn-secondary" onclick="exportPDF()">📄 Export PDF Report</button>
+        <button class="btn btn-secondary" onclick="resetAll()" style="margin-left:auto">↩ New Review</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ── State ──────────────────────────────────────────────────────────────────
+  let selectedFile = null;
+  let lastResults = null;
+
+  // ── File drag & drop ───────────────────────────────────────────────────────
+  function handleDragOver(e) {
+    e.preventDefault();
+    document.getElementById('upload-area').classList.add('drag-over');
+  }
+  function handleDragLeave() {
+    document.getElementById('upload-area').classList.remove('drag-over');
+  }
+  function handleDrop(e) {
+    e.preventDefault();
+    handleDragLeave();
+    const file = e.dataTransfer.files[0];
+    if (file) setFile(file);
+  }
+  function handleFileSelect(e) {
+    if (e.target.files[0]) setFile(e.target.files[0]);
+  }
+  function setFile(file) {
+    selectedFile = file;
+    document.getElementById('filename').textContent = `✓ ${file.name}`;
+  }
+
+  // ── UI helpers ─────────────────────────────────────────────────────────────
+  function setLoading(visible, text = 'Analysing copy…') {
+    const el = document.getElementById('loading');
+    el.classList.toggle('visible', visible);
+    document.getElementById('loading-text').textContent = text;
+    document.getElementById('analyse-btn').disabled = visible;
+  }
+  function showError(msg) {
+    const el = document.getElementById('error-banner');
+    el.classList.add('visible');
+    document.getElementById('error-text').textContent = msg;
+  }
+  function clearError() {
+    document.getElementById('error-banner').classList.remove('visible');
+  }
+
+  // ── Main analyse flow ──────────────────────────────────────────────────────
+  async function analyse() {
+    clearError();
+    document.getElementById('results').classList.remove('visible');
+
+    if (!selectedFile) return showError('Please select a Word document (.docx) to upload.');
+
+    setLoading(true, 'Reading document…');
+    const form = new FormData();
+    form.append('file', selectedFile);
+
+    let textItems;
+    try {
+      const resp = await fetch('/api/extract-docx', { method: 'POST', body: form });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.error || 'Failed to read document');
+      textItems = data.text;
+      setLoading(true, 'Analysing copy…');
+    } catch (err) {
+      setLoading(false);
+      return showError(err.message);
+    }
+
+    try {
+      const resp = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ textItems }),
+      });
+      if (!resp.ok) {
+        const data = await resp.json().catch(() => ({}));
+        throw new Error(data.error || `Server error ${resp.status}`);
+      }
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+      }
+
+      const jsonMatch = buffer.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error('Unexpected response format from AI');
+      const result = JSON.parse(jsonMatch[0]);
+      lastResults = result;
+      renderResults(result);
+    } catch (err) {
+      showError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // ── Render results ─────────────────────────────────────────────────────────
+  function renderResults(data) {
+    document.getElementById('summary-text').textContent = data.summary || 'Analysis complete.';
+
+    const issues = data.issues || [];
+    const counts = { high: 0, medium: 0, low: 0 };
+    issues.forEach(i => { if (counts[i.severity] !== undefined) counts[i.severity]++; });
+
+    const statsEl = document.getElementById('stats-row');
+    statsEl.innerHTML = `
+      <div class="stat-pill total">📋 ${issues.length} issue${issues.length !== 1 ? 's' : ''} found</div>
+      ${counts.high ? `<div class="stat-pill high">🔴 ${counts.high} High</div>` : ''}
+      ${counts.medium ? `<div class="stat-pill medium">🟡 ${counts.medium} Medium</div>` : ''}
+      ${counts.low ? `<div class="stat-pill low">🟢 ${counts.low} Low</div>` : ''}
+    `;
+
+    const listEl = document.getElementById('issues-list');
+    document.getElementById('issues-label').textContent = issues.length
+      ? `${issues.length} issue${issues.length !== 1 ? 's' : ''} found`
+      : 'Result';
+
+    if (issues.length === 0) {
+      listEl.innerHTML = `
+        <div class="card no-issues">
+          <div class="icon">✅</div>
+          <h3>No compliance issues found</h3>
+          <p>The copy appears to comply with Australian Consumer Law, financial services regulations, and your custom guidelines.</p>
+        </div>`;
+    } else {
+      listEl.innerHTML = issues.map((issue, i) => {
+        const sev = issue.severity || 'low';
+        const type = (issue.issueType || '').toLowerCase().replace(/\s/g, '');
+        const typeBadgeClass = type.includes('acl') ? 'acl'
+          : type.includes('financial') ? 'financial'
+          : 'custom';
+        const typeLabel = issue.issueType || 'Unknown';
+
+        return `
+          <div class="issue-card ${sev}">
+            <div class="issue-header">
+              <span class="badge ${sev}">${sev.charAt(0).toUpperCase() + sev.slice(1)}</span>
+              <span class="badge ${typeBadgeClass}">${typeLabel}</span>
+              <span class="issue-rule">${escHtml(issue.rule || '')}</span>
+            </div>
+            <div class="issue-body">
+              <div class="original-text">${escHtml(issue.originalText || '')}</div>
+              <div class="issue-section">
+                <div class="issue-section-label">Issue</div>
+                <p>${escHtml(issue.issue || '')}</p>
+              </div>
+              <div class="issue-section">
+                <div class="issue-section-label">Suggested Fix</div>
+                <div class="fix-box">✏️ ${escHtml(issue.suggestedFix || '')}</div>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    document.getElementById('results').classList.add('visible');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // ── Export PDF ─────────────────────────────────────────────────────────────
+  function exportPDF() {
+    if (!lastResults) return;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+    const W = 210, margin = 18, lineH = 7, colWidth = W - margin * 2;
+    let y = margin;
+
+    function checkPage(needed = lineH) {
+      if (y + needed > 280) { doc.addPage(); y = margin; }
+    }
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.setTextColor(37, 99, 235);
+    doc.text('Legal Copy Review Report', margin, y);
+    y += 8;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(107, 114, 128);
+    doc.text(`Generated ${new Date().toLocaleDateString('en-AU', { day:'numeric', month:'long', year:'numeric' })}`, margin, y);
+    y += 10;
+
+    doc.setDrawColor(226, 229, 234);
+    doc.line(margin, y, W - margin, y);
+    y += 8;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(26, 29, 35);
+    doc.text('Summary', margin, y);
+    y += 6;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    const summaryLines = doc.splitTextToSize(lastResults.summary || '', colWidth);
+    summaryLines.forEach(l => {
+      checkPage();
+      doc.setTextColor(55, 65, 81);
+      doc.text(l, margin, y);
+      y += 5;
+    });
+    y += 6;
+
+    const issues = lastResults.issues || [];
+    const counts = { high: 0, medium: 0, low: 0 };
+    issues.forEach(i => { if (counts[i.severity] !== undefined) counts[i.severity]++; });
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(10);
+    doc.setTextColor(26, 29, 35);
+    doc.text(`Total Issues: ${issues.length}   High: ${counts.high}   Medium: ${counts.medium}   Low: ${counts.low}`, margin, y);
+    y += 10;
+
+    if (issues.length > 0) {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(26, 29, 35);
+      doc.text('Issues Found', margin, y);
+      y += 8;
+
+      issues.forEach((issue, idx) => {
+        checkPage(30);
+
+        const sevColors = { high: [220,38,38], medium: [217,119,6], low: [5,150,105] };
+        const [r,g,b] = sevColors[issue.severity] || [107,114,128];
+
+        doc.setFillColor(r, g, b);
+        doc.roundedRect(margin, y - 4, colWidth, 8, 2, 2, 'F');
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        doc.setTextColor(255, 255, 255);
+        doc.text(`${idx + 1}. [${(issue.severity||'').toUpperCase()}] ${issue.issueType || ''} — ${issue.rule || ''}`, margin + 3, y + 1);
+        y += 10;
+
+        doc.setFont('helvetica', 'italic');
+        doc.setFontSize(9);
+        doc.setTextColor(75, 85, 99);
+        const origLines = doc.splitTextToSize(`"${issue.originalText || ''}"`, colWidth - 4);
+        origLines.forEach(l => {
+          checkPage();
+          doc.text(l, margin + 2, y);
+          y += 4.5;
+        });
+        y += 2;
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        doc.setTextColor(26, 29, 35);
+        doc.text('Issue:', margin, y);
+        y += 4.5;
+        doc.setFont('helvetica', 'normal');
+        const issueLines = doc.splitTextToSize(issue.issue || '', colWidth - 4);
+        issueLines.forEach(l => {
+          checkPage();
+          doc.text(l, margin + 2, y);
+          y += 4.5;
+        });
+        y += 2;
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(9);
+        doc.setTextColor(5, 150, 105);
+        doc.text('Suggested Fix:', margin, y);
+        y += 4.5;
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(6, 95, 70);
+        const fixLines = doc.splitTextToSize(issue.suggestedFix || '', colWidth - 4);
+        fixLines.forEach(l => {
+          checkPage();
+          doc.text(l, margin + 2, y);
+          y += 4.5;
+        });
+
+        y += 8;
+        checkPage();
+        doc.setDrawColor(226, 229, 234);
+        doc.line(margin, y - 4, W - margin, y - 4);
+      });
+    } else {
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(11);
+      doc.setTextColor(5, 150, 105);
+      doc.text('✓ No compliance issues found.', margin, y);
+    }
+
+    const pageCount = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8);
+      doc.setTextColor(156, 163, 175);
+      doc.text(`Legal Copy Reviewer — Page ${i} of ${pageCount}`, margin, 290);
+    }
+
+    doc.save(`legal-review-${Date.now()}.pdf`);
+  }
+
+  // ── Reset ──────────────────────────────────────────────────────────────────
+  function resetAll() {
+    document.getElementById('filename').textContent = '';
+    document.getElementById('file-input').value = '';
+    selectedFile = null;
+    lastResults = null;
+    document.getElementById('results').classList.remove('visible');
+    clearError();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
