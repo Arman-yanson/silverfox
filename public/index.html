@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Legal Copy Reviewer</title>
+  <title>Vetit</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -344,7 +344,7 @@
 <header>
   <div class="logo">⚖️</div>
   <div>
-    <h1>Legal Copy Reviewer</h1>
+    <h1>Vetit</h1>
     <p>Australian Consumer Law &amp; Financial Services Compliance</p>
   </div>
 </header>
@@ -591,7 +591,7 @@
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(18);
     doc.setTextColor(37, 99, 235);
-    doc.text('Legal Copy Review Report', margin, y);
+    doc.text('Vetit Report', margin, y);
     y += 8;
 
     doc.setFont('helvetica', 'normal');
@@ -709,7 +709,7 @@
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(8);
       doc.setTextColor(156, 163, 175);
-      doc.text(`Legal Copy Reviewer — Page ${i} of ${pageCount}`, margin, 290);
+      doc.text(`Vetit — Page ${i} of ${pageCount}`, margin, 290);
     }
 
     doc.save(`legal-review-${Date.now()}.pdf`);

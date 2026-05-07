@@ -2,7 +2,7 @@
 
 Add your organisation's specific copy rules here. Claude will flag any violations.
 
-# Legal Copy Review Guidelines
+# Vetit Guidelines
 
 ## Source: NRMA Car Insurance PDS (NRMAMOTPDS REV2 09/2023)
 Issued by: Insurance Australia Limited ABN 11 000 016 722 AFSL 227681
