@@ -60,8 +60,86 @@
     header h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
     header p { font-size: 13px; color: var(--muted); }
 
-    main { max-width: 900px; margin: 0 auto; padding: 32px 20px; }
+    main { max-width: 1080px; margin: 0 auto; padding: 32px 20px; }
 
+    /* ── Two-column layout ─────────────────────────────────────────────────── */
+    .layout {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    /* ── Sidebar ───────────────────────────────────────────────────────────── */
+    .sidebar {
+      width: 200px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 88px;
+    }
+
+    .sidebar-heading {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--muted);
+      padding: 0 12px 10px;
+    }
+
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .category-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      text-align: left;
+      width: 100%;
+      transition: background .12s, color .12s;
+    }
+    .category-item:hover { background: var(--border); }
+    .category-item.active {
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .category-check {
+      width: 17px;
+      height: 17px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 10px;
+      font-weight: 700;
+      color: transparent;
+      transition: all .12s;
+      background: var(--surface);
+    }
+    .category-item.active .category-check {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    /* ── Main content area ─────────────────────────────────────────────────── */
+    .content { flex: 1; min-width: 0; }
+
+    /* ── Cards ─────────────────────────────────────────────────────────────── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -331,11 +409,20 @@
       background: var(--border);
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 700px) {
       header { padding: 16px; flex-wrap: wrap; }
       main { padding: 20px 12px; }
       .card { padding: 20px; }
       .issue-rule { display: none; }
+      .layout { flex-direction: column; gap: 0; }
+      .sidebar {
+        width: 100%;
+        position: static;
+        margin-bottom: 20px;
+      }
+      .category-list { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+      .category-item { width: auto; padding: 7px 12px; font-size: 13px; }
+      .sidebar-heading { padding-bottom: 8px; }
     }
   </style>
 </head>
@@ -350,68 +437,108 @@
 </header>
 
 <main>
+  <div class="layout">
 
-  <!-- Input card -->
-  <div class="card" id="input-card">
-    <h2>Review copy for compliance issues</h2>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-heading">Review categories</div>
+      <nav class="category-list">
+        <button class="category-item active" data-key="tov" onclick="toggleCategory(this)">
+          <span class="category-check">✓</span>
+          <span>Tone of voice</span>
+        </button>
+        <button class="category-item" data-key="marketing" onclick="toggleCategory(this)">
+          <span class="category-check"></span>
+          <span>Marketing guidelines</span>
+        </button>
+        <button class="category-item" data-key="factual" onclick="toggleCategory(this)">
+          <span class="category-check"></span>
+          <span>Factual accuracy</span>
+        </button>
+        <button class="category-item" data-key="financial" onclick="toggleCategory(this)">
+          <span class="category-check"></span>
+          <span>Financial services</span>
+        </button>
+        <button class="category-item" data-key="legal" onclick="toggleCategory(this)">
+          <span class="category-check"></span>
+          <span>Legal &amp; compliance</span>
+        </button>
+      </nav>
+    </aside>
 
-    <div class="field">
-      <label>Upload Word Document (.docx)</label>
-      <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()"
-        ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
-        <input type="file" id="file-input" accept=".docx,.doc" onchange="handleFileSelect(event)" />
-        <div class="icon">📂</div>
-        <p><strong>Click to browse</strong> or drag and drop</p>
-        <p>.docx files supported</p>
-        <div class="filename" id="filename"></div>
+    <!-- Main content -->
+    <div class="content">
+
+      <!-- Input card -->
+      <div class="card" id="input-card">
+        <h2>Review copy for compliance issues</h2>
+
+        <div class="field">
+          <label>Upload Word Document (.docx)</label>
+          <div class="upload-area" id="upload-area" onclick="document.getElementById('file-input').click()"
+            ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+            <input type="file" id="file-input" accept=".docx,.doc" onchange="handleFileSelect(event)" />
+            <div class="icon">📂</div>
+            <p><strong>Click to browse</strong> or drag and drop</p>
+            <p>.docx files supported</p>
+            <div class="filename" id="filename"></div>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn btn-primary" id="analyse-btn" onclick="analyse()">
+            <span>Analyse for Issues</span>
+            <span>→</span>
+          </button>
+        </div>
+
+        <div class="loading" id="loading">
+          <div class="spinner"></div>
+          <span id="loading-text">Analysing copy…</span>
+        </div>
+
+        <div class="error-banner" id="error-banner">
+          <span>⚠️</span>
+          <span id="error-text"></span>
+        </div>
       </div>
-    </div>
 
-    <div class="action-row">
-      <button class="btn btn-primary" id="analyse-btn" onclick="analyse()">
-        <span>Analyse for Issues</span>
-        <span>→</span>
-      </button>
-    </div>
+      <!-- Results -->
+      <div id="results">
+        <div class="summary-card">
+          <div class="label">Compliance Summary</div>
+          <p id="summary-text"></p>
+        </div>
 
-    <div class="loading" id="loading">
-      <div class="spinner"></div>
-      <span id="loading-text">Analysing copy…</span>
-    </div>
+        <div class="stats-row" id="stats-row"></div>
 
-    <div class="error-banner" id="error-banner">
-      <span>⚠️</span>
-      <span id="error-text"></span>
-    </div>
-  </div>
+        <div class="section-divider" id="issues-label">Issues found</div>
 
-  <!-- Results -->
-  <div id="results">
-    <div class="summary-card">
-      <div class="label">Compliance Summary</div>
-      <p id="summary-text"></p>
-    </div>
+        <div id="issues-list"></div>
 
-    <div class="stats-row" id="stats-row"></div>
-
-    <div class="section-divider" id="issues-label">Issues found</div>
-
-    <div id="issues-list"></div>
-
-    <div class="card" style="margin-top:24px;">
-      <div class="results-actions" id="results-actions">
-        <button class="btn btn-secondary" onclick="exportPDF()">📄 Export PDF Report</button>
-        <button class="btn btn-secondary" onclick="resetAll()" style="margin-left:auto">↩ New Review</button>
+        <div class="card" style="margin-top:24px;">
+          <div class="results-actions" id="results-actions">
+            <button class="btn btn-secondary" onclick="exportPDF()">📄 Export PDF Report</button>
+            <button class="btn btn-secondary" onclick="resetAll()" style="margin-left:auto">↩ New Review</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
 
+    </div><!-- /.content -->
+  </div><!-- /.layout -->
 </main>
 
 <script>
   // ── State ──────────────────────────────────────────────────────────────────
   let selectedFile = null;
   let lastResults = null;
+
+  // ── Category selection ─────────────────────────────────────────────────────
+  function toggleCategory(el) {
+    el.classList.toggle('active');
+    const check = el.querySelector('.category-check');
+    check.textContent = el.classList.contains('active') ? '✓' : '';
+  }
 
   // ── File drag & drop ───────────────────────────────────────────────────────
   function handleDragOver(e) {
