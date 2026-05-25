@@ -9,7 +9,8 @@
       "Read(//Users/armanyanson/silverfox-v2/**)",
       "Bash(npm run *)",
       "Bash(curl -s http://localhost:3000)",
-      "Bash(git *)"
+      "Bash(git *)",
+      "Bash(open *)"
     ]
   }
 }
