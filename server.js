@@ -46,6 +46,11 @@ FINANCIAL SERVICES COMPLIANCE — CHECK FOR:
 - "Get rich" style claims or guaranteed returns
 - Testimonials used as financial advice without proper context
 
+NRMA PRODUCT COMPLIANCE — CHECK FOR:
+- Incorrect representation of cover levels — there are exactly 5 levels (Comprehensive Plus, Comprehensive, Comprehensive Basics, Third Party Fire and Theft, Third Party Property Damage); flag any copy that omits, misstates, or implies a different hierarchy
+- Misrepresentation of excess conditions — multiple excess types can apply to a single claim; flag any copy that implies only one excess applies, that excess can be removed by paying additional premium, or that excess always applies (there are specific waiver scenarios)
+- Discount claims that don't match the guidelines — Multi-Product, Relationship, and Online discounts have strict eligibility rules, percentage tiers, and exclusions; flag any specific percentage, eligibility claim, or implication of permanence that contradicts the guidelines
+
 CUSTOM GUIDELINES:
 ${guidelinesContent}
 

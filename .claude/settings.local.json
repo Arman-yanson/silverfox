@@ -3,7 +3,13 @@
     "allow": [
       "Bash(pkill -f \"node server.js\")",
       "Bash(npm start *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Read(//Users/armanyanson/silverfox-v2/**)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(git *)"
     ]
   }
 }
