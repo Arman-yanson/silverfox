@@ -51,6 +51,45 @@ NRMA PRODUCT COMPLIANCE — CHECK FOR:
 - Misrepresentation of excess conditions — multiple excess types can apply to a single claim; flag any copy that implies only one excess applies, that excess can be removed by paying additional premium, or that excess always applies (there are specific waiver scenarios)
 - Discount claims that don't match the guidelines — Multi-Product, Relationship, and Online discounts have strict eligibility rules, percentage tiers, and exclusions; flag any specific percentage, eligibility claim, or implication of permanence that contradicts the guidelines
 
+NRMA TONE OF VOICE — CHECK FOR (the NRMA Brand Identity Guidelines are the PRIMARY and authoritative standard for all tone of voice decisions; these rules override any general writing conventions where they conflict):
+
+Apply checks in this order: NRMA TOV rules first, general rules second. Only raise a general writing issue where no NRMA-specific rule already governs it.
+
+FOUR CREATIVE PRINCIPLES — flag violations of each:
+- SMART: Copy must be thoughtful, incisive, factual and confident. Flag copy that is quippy, arrogant, condescending, or fails to use expertise to build trust with the reader.
+- SIMPLE: Copy must use plain English and short sentences. Flag "assist" instead of "help", "additional" instead of "more", "lodge" instead of "make", or any unnecessarily complex language that has a simpler alternative.
+- ACTIVE: Copy must use active voice and drive clear action. Flag passive constructions, CTAs that do not start with an action word, and copy that leaves the customer without a clear next step.
+- EMPATHETIC: Copy must be warm, human and understanding. Flag formal, corporate or detached language. Flag "Dear [Name]" salutations — NRMA style requires "Hi [Name]".
+
+CUSTOMER JOURNEY STAGE MISMATCHES — flag where the tone does not match the channel or stage:
+- Campaign and awareness copy must be SMART — flag if not knowledge-led, confident or purposeful
+- Quote flows and product pages must be SIMPLE — flag complex language or unclear option presentation
+- Decision and purchase copy must be ACTIVE — flag passive voice or missing calls to action
+- Claims and service copy must be EMPATHETIC — flag cold, detached or commanding language
+- Renewal and offer emails must be ACTIVE — flag passive voice or absence of a clear CTA
+
+CONTENT STYLE GUIDE VIOLATIONS — always flag:
+- Title case in body copy (sentence case is required throughout)
+- Full stops in headlines unless the headline is a complete sentence
+- Semicolons or em-dashes anywhere in copy
+- Dates in dd/xx/xxxx format (must be written in full: Monday 10 February 2025)
+- Times without a colon — "9am" must be "9:00am" (exception: very space-constrained contexts)
+- Acronyms not spelled out in full on first mention with the acronym in brackets
+- Contractions avoided where plain English calls for them — always use "we've", "you'll", "here's", "let's"
+- "A Help Company" written without title caps
+- "A Help Company™" appearing without the trademark symbol in long-form copy
+- "Help. Always." used as a tagline — this is not permitted in customer communications
+- "help" capitalised in general copy or headlines
+
+GRAMMAR AND PUNCTUATION — NRMA STYLE:
+- No semicolons permitted
+- No em-dashes permitted
+- No full stops in headlines unless a complete sentence
+- Oxford comma only when genuinely needed for clarity
+- Ampersands only where space is very tight
+- No ordinal indicators — "1st", "2nd" must be written "1", "2"
+- No commas in dates
+
 CUSTOM GUIDELINES:
 ${guidelinesContent}
 
@@ -61,7 +100,7 @@ Respond with ONLY a valid JSON object — no markdown, no preamble. Use this exa
   "issues": [
     {
       "originalText": "exact verbatim text from the input that contains the issue",
-      "issueType": "ACL" | "Financial Services" | "Custom Guidelines",
+      "issueType": "ACL" | "Financial Services" | "NRMA Product" | "Tone of Voice",
       "severity": "high" | "medium" | "low",
       "rule": "specific rule, section, or guideline violated",
       "issue": "clear explanation of why this copy is problematic",

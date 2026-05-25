@@ -4,6 +4,183 @@ Add your organisation's specific copy rules here. Claude will flag any violation
 
 # Vetit Guidelines
 
+## Source: NRMA Insurance Brand Identity Guidelines — Tone of Voice
+
+---
+
+## BRAND VOICE
+
+The NRMA Insurance voice embodies being A Help Company.
+- Always warm and human
+- Offers reassurance and compassion when needed
+- Prioritises action and makes the customer's next step clear
+- Communicates simply, clearly and with care
+- Commitment: "HELP. Always."
+
+---
+
+## FOUR CREATIVE PRINCIPLES
+
+### 1. SMART
+We build trust by showing intelligence and expertise.
+
+Smart IS: Thoughtful, Incisive, Factual, Confident
+Smart is NOT: Quippy, Know-it-all, Arrogant, Condescending
+
+How to write Smart:
+- Think ahead to consider what the audience needs and cares about
+- Explain complex ideas in clear, everyday language
+- Use knowledge and insight to guide customers in decisions
+- Build confidence by speaking clearly and with purpose
+- Use expertise to assure customers they're in good hands
+- Dial up for prospective customers
+
+### 2. SIMPLE
+We speak simply, leaving no room for confusion.
+
+Simple IS: Clear, Succinct, Everyday, Uncomplicated
+Simple is NOT: Cold, Robotic, Lowest common denominator
+
+How to write Simple:
+- Use plain English and short sentences
+- Choose simple words — "help" not "assist", "more" not "additional"
+- Get straight to the point
+- Ask yourself: is there an easier way to say this?
+- Keep it direct but stay warm and human
+- Dial up for existing customers
+
+### 3. ACTIVE
+We keep things moving with a lively voice that inspires action.
+
+Active IS: Positive, Energised, Proactive, Responsive
+Active is NOT: Aggressive, Indifferent, Ambiguous
+
+How to write Active:
+- Use active voice not passive voice
+- Focus on customer actions and clearly explain next steps
+- Start CTAs with an action word — "Join us", "Learn more"
+- Stay on topic, focusing on scenarios relevant to the customer
+- Use clear, scannable headlines that prompt action
+- Review for punchiness and read aloud to catch unnecessary words
+- Dial up for existing customers
+
+### 4. EMPATHETIC
+We make customers feel seen and heard.
+
+Empathetic IS: Warm, Understanding, Reassuring, Helpful, Caring
+Empathetic is NOT: Formal, Commanding, Apathetic, Detached
+
+How to write Empathetic:
+- Always talk directly to the customer ("you")
+- Use inclusive language — "we", "ours", "let's"
+- Speak human-to-human, not like a company
+- Show compassion with phrases like "we understand" and
+  "we're here to help"
+- Offer support without overpromising
+- Balance clear directives with warmth especially in claims
+- Dial up for customers in need
+
+---
+
+## CUSTOMER JOURNEY — PRIORITY PRINCIPLES BY STAGE
+
+| Stage | Goal | Priority Principle |
+|-------|------|--------------------|
+| Imagine & Pursue | Win over customer | Smart |
+| Realise | Win over customer | Smart |
+| Explore / Quote | Support informed choice | Simple |
+| Rethink / Renew | Support informed choice | Simple |
+| Decide / Buy | Motivate next step | Active |
+| Enable / Engage | Motivate next step | Active |
+| Help / Service | Serve the customer | Empathetic |
+| Recover / Claim | Serve the customer | Empathetic |
+
+---
+
+## TOV FLAGS — CHECK COPY FOR THESE VIOLATIONS
+
+### Voice violations — always flag:
+- Passive voice used where active voice is possible
+- Copy sounds formal, corporate or robotic
+- Copy uses "assist" instead of "help", "additional"
+  instead of "more", "lodge" instead of "make"
+- Copy uses "Dear [Name]" instead of "Hi [Name]"
+- Copy uses complex legal or technical language without
+  plain English explanation
+- Copy lacks a clear customer action or next step
+- CTAs do not start with an action word
+- Copy uses em-dashes or semicolons (not in brand style)
+- Copy uses ALL CAPS for "HELP" outside of brand name context
+- Copy uses "Help. Always." as a tagline or brand line
+  in communications — this is not permitted
+- Copy capitalises "help" in general copy or headlines
+
+### Tone violations by channel:
+- Campaign/blog copy that is not Smart — punchy,
+  knowledge-led, clever headlines
+- Quote flows or product pages that are not Simple —
+  options not laid out clearly, complex language used
+- Claims or service copy that is not Empathetic —
+  cold, detached or formal language used
+- Renewal or offer emails that are not Active —
+  passive voice, no clear next step
+
+### Style guide violations — always flag:
+- Title case used in body copy instead of sentence case
+- Full stops used in headlines (unless a full sentence)
+- Semicolons or em-dashes used anywhere
+- Dates written as dd/xx/xxxx format
+- Times written without colon e.g. "9am" should be "9:00am"
+  (exception: where space is limited)
+- Acronyms used without spelling out in full on first mention
+- Contractions avoided where plain English calls for them
+- "A Help Company" written without title caps
+- "A Help Company™" used without trademark symbol
+  in long-form copy
+
+---
+
+## CONTENT STYLE RULES
+
+### Capitalisation
+- Use sentence case for all body copy
+- Capitalise product names e.g. International Travel Insurance
+- Use title caps only for "A Help Company"
+- Do not capitalise "help" in general copy
+
+### Contractions
+- Always use contractions in copy — "we've", "you'll",
+  "here's", "let's"
+- Do not use uncommon contractions like "it'd"
+
+### Dates and times
+- Write in full in body copy: Monday 10 February 2025
+- Use 12-hour time with colon: 9:30am, 12:00pm
+- Use en-dashes for ranges: Monday–Friday, 9am–5pm
+- No ordinal indicators: not "1st", "2nd" — just "1", "2"
+- No commas in dates
+- Avoid xx/xx/xxxx format
+
+### Punctuation
+- No full stops in headlines unless a full sentence
+- No semicolons
+- No em-dashes
+- Oxford comma only if needed for clarity
+- Ampersands only when very tight on space
+
+### Acronyms
+- Spell out in full on first mention with acronym in brackets
+- e.g. Compulsory Third Party (CTP)
+- Acronym alone is fine after first mention
+
+### Lists
+- Lead-in sentence should end with a colon
+- Each item in sentence case
+- Final item ends with full stop, others need no punctuation
+- Keep each item to one sentence and one concept
+
+---
+
 ## Source: NRMA Car Insurance PDS (NRMAMOTPDS REV2 09/2023)
 Issued by: Insurance Australia Limited ABN 11 000 016 722 AFSL 227681
 
@@ -200,180 +377,3 @@ Only applies if:
 - Any implication that holding multiple products guarantees a set saving 
   without qualifying conditions
 - Any suggestion that excess is optional or removable
-
----
-
-## Source: NRMA Insurance Brand Identity Guidelines — Tone of Voice
-
----
-
-## BRAND VOICE
-
-The NRMA Insurance voice embodies being A Help Company.
-- Always warm and human
-- Offers reassurance and compassion when needed
-- Prioritises action and makes the customer's next step clear
-- Communicates simply, clearly and with care
-- Commitment: "HELP. Always."
-
----
-
-## FOUR CREATIVE PRINCIPLES
-
-### 1. SMART
-We build trust by showing intelligence and expertise.
-
-Smart IS: Thoughtful, Incisive, Factual, Confident
-Smart is NOT: Quippy, Know-it-all, Arrogant, Condescending
-
-How to write Smart:
-- Think ahead to consider what the audience needs and cares about
-- Explain complex ideas in clear, everyday language
-- Use knowledge and insight to guide customers in decisions
-- Build confidence by speaking clearly and with purpose
-- Use expertise to assure customers they're in good hands
-- Dial up for prospective customers
-
-### 2. SIMPLE
-We speak simply, leaving no room for confusion.
-
-Simple IS: Clear, Succinct, Everyday, Uncomplicated
-Simple is NOT: Cold, Robotic, Lowest common denominator
-
-How to write Simple:
-- Use plain English and short sentences
-- Choose simple words — "help" not "assist", "more" not "additional"
-- Get straight to the point
-- Ask yourself: is there an easier way to say this?
-- Keep it direct but stay warm and human
-- Dial up for existing customers
-
-### 3. ACTIVE
-We keep things moving with a lively voice that inspires action.
-
-Active IS: Positive, Energised, Proactive, Responsive
-Active is NOT: Aggressive, Indifferent, Ambiguous
-
-How to write Active:
-- Use active voice not passive voice
-- Focus on customer actions and clearly explain next steps
-- Start CTAs with an action word — "Join us", "Learn more"
-- Stay on topic, focusing on scenarios relevant to the customer
-- Use clear, scannable headlines that prompt action
-- Review for punchiness and read aloud to catch unnecessary words
-- Dial up for existing customers
-
-### 4. EMPATHETIC
-We make customers feel seen and heard.
-
-Empathetic IS: Warm, Understanding, Reassuring, Helpful, Caring
-Empathetic is NOT: Formal, Commanding, Apathetic, Detached
-
-How to write Empathetic:
-- Always talk directly to the customer ("you")
-- Use inclusive language — "we", "ours", "let's"
-- Speak human-to-human, not like a company
-- Show compassion with phrases like "we understand" and
-  "we're here to help"
-- Offer support without overpromising
-- Balance clear directives with warmth especially in claims
-- Dial up for customers in need
-
----
-
-## CUSTOMER JOURNEY — PRIORITY PRINCIPLES BY STAGE
-
-| Stage | Goal | Priority Principle |
-|-------|------|--------------------|
-| Imagine & Pursue | Win over customer | Smart |
-| Realise | Win over customer | Smart |
-| Explore / Quote | Support informed choice | Simple |
-| Rethink / Renew | Support informed choice | Simple |
-| Decide / Buy | Motivate next step | Active |
-| Enable / Engage | Motivate next step | Active |
-| Help / Service | Serve the customer | Empathetic |
-| Recover / Claim | Serve the customer | Empathetic |
-
----
-
-## TOV FLAGS — CHECK COPY FOR THESE VIOLATIONS
-
-### Voice violations — always flag:
-- Passive voice used where active voice is possible
-- Copy sounds formal, corporate or robotic
-- Copy uses "assist" instead of "help", "additional"
-  instead of "more", "lodge" instead of "make"
-- Copy uses "Dear [Name]" instead of "Hi [Name]"
-- Copy uses complex legal or technical language without
-  plain English explanation
-- Copy lacks a clear customer action or next step
-- CTAs do not start with an action word
-- Copy uses em-dashes or semicolons (not in brand style)
-- Copy uses ALL CAPS for "HELP" outside of brand name context
-- Copy uses "Help. Always." as a tagline or brand line
-  in communications — this is not permitted
-- Copy capitalises "help" in general copy or headlines
-
-### Tone violations by channel:
-- Campaign/blog copy that is not Smart — punchy,
-  knowledge-led, clever headlines
-- Quote flows or product pages that are not Simple —
-  options not laid out clearly, complex language used
-- Claims or service copy that is not Empathetic —
-  cold, detached or formal language used
-- Renewal or offer emails that are not Active —
-  passive voice, no clear next step
-
-### Style guide violations — always flag:
-- Title case used in body copy instead of sentence case
-- Full stops used in headlines (unless a full sentence)
-- Semicolons or em-dashes used anywhere
-- Dates written as dd/xx/xxxx format
-- Times written without colon e.g. "9am" should be "9:00am"
-  (exception: where space is limited)
-- Acronyms used without spelling out in full on first mention
-- Contractions avoided where plain English calls for them
-- "A Help Company" written without title caps
-- "A Help Company™" used without trademark symbol
-  in long-form copy
-
----
-
-## CONTENT STYLE RULES
-
-### Capitalisation
-- Use sentence case for all body copy
-- Capitalise product names e.g. International Travel Insurance
-- Use title caps only for "A Help Company"
-- Do not capitalise "help" in general copy
-
-### Contractions
-- Always use contractions in copy — "we've", "you'll",
-  "here's", "let's"
-- Do not use uncommon contractions like "it'd"
-
-### Dates and times
-- Write in full in body copy: Monday 10 February 2025
-- Use 12-hour time with colon: 9:30am, 12:00pm
-- Use en-dashes for ranges: Monday–Friday, 9am–5pm
-- No ordinal indicators: not "1st", "2nd" — just "1", "2"
-- No commas in dates
-- Avoid xx/xx/xxxx format
-
-### Punctuation
-- No full stops in headlines unless a full sentence
-- No semicolons
-- No em-dashes
-- Oxford comma only if needed for clarity
-- Ampersands only when very tight on space
-
-### Acronyms
-- Spell out in full on first mention with acronym in brackets
-- e.g. Compulsory Third Party (CTP)
-- Acronym alone is fine after first mention
-
-### Lists
-- Lead-in sentence should end with a colon
-- Each item in sentence case
-- Final item ends with full stop, others need no punctuation
-- Keep each item to one sentence and one concept
